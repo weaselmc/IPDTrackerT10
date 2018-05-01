@@ -5,27 +5,63 @@ using System.Linq;
 using System.Threading.Tasks;
 using Template10.Services.NavigationService;
 using Windows.UI.Xaml.Navigation;
+using System.Collections.ObjectModel;
+using IPDTracker.Models;
 
 namespace IPDTracker.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {
+        public ObservableCollection<Billable> Billables { get; set; }
+
         public MainPageViewModel()
         {
-            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
-            {
-                Value = "Designtime value";
-            }
-        }
+            Billables = new ObservableCollection<Billable>();
 
-        string _Value = "Gas";
-        public string Value { get { return _Value; } set { Set(ref _Value, value); } }
+            Billables.Add(new Billable
+            {
+                BillableId = Guid.NewGuid(),
+                ClientName = "Jimbo Jones",
+                BillableDate = DateTime.Now,
+                BillableTime = new TimeSpan(1, 45, 0),
+                Notes = "Loves Beanies and breaking things"
+            });
+            Billables.Add(new Billable
+            {
+                BillableId = Guid.NewGuid(),
+                ClientName = "Nelson Muntz",
+                BillableDate = DateTime.Now,
+                BillableTime = new TimeSpan(2, 30, 0),
+                Notes = "Little slow .. but loves a good laugh"
+            });
+            Billables.Add(new Billable
+            {
+                BillableId = Guid.NewGuid(),
+                ClientName = "Kearney Zzyzwicz",
+                BillableDate = DateTime.Now,
+                BillableTime = new TimeSpan(2, 30, 0),
+                Notes = "Way to old to still be in school"
+            });
+            Billables.Add(new Billable
+            {
+                BillableId = Guid.NewGuid(),
+                ClientName = "Dolph Starbeam",
+                BillableDate = DateTime.Now,
+                BillableTime = new TimeSpan(1, 10, 0),
+                Notes = "Hippie parents"
+            });
+        }
 
         public override async Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> suspensionState)
         {
             if (suspensionState.Any())
             {
-                Value = suspensionState[nameof(Value)]?.ToString();
+                
+            }
+            if (parameter != null)
+            {
+                Billable billable = (Billable)parameter;
+                Billables.Add(billable);
             }
             await Task.CompletedTask;
         }
@@ -34,7 +70,7 @@ namespace IPDTracker.ViewModels
         {
             if (suspending)
             {
-                suspensionState[nameof(Value)] = Value;
+                
             }
             await Task.CompletedTask;
         }
@@ -45,9 +81,9 @@ namespace IPDTracker.ViewModels
             await Task.CompletedTask;
         }
 
-        public void GotoDetailsPage() =>
-            NavigationService.Navigate(typeof(Views.DetailPage), Value);
-
+        //public void GotoDetailsPage() => NavigationService.Navigate(typeof(Views.DetailPage), Value);
+        public void GotoAddNew() =>
+            NavigationService.Navigate(typeof(Views.NewBillablePage));
         public void GotoSettings() =>
             NavigationService.Navigate(typeof(Views.SettingsPage), 0);
 
