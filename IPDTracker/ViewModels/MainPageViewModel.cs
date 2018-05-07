@@ -7,49 +7,26 @@ using Template10.Services.NavigationService;
 using Windows.UI.Xaml.Navigation;
 using System.Collections.ObjectModel;
 using IPDTracker.Models;
+using IPDTracker.Views;
+using Windows.UI.Xaml.Controls;
+using IPDTracker.Services.DataServices;
 
 namespace IPDTracker.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {
         public ObservableCollection<Billable> Billables { get; set; }
-
+        public Billable selectedBillable;
+        public string DisplayTotal { get; set; }
         public MainPageViewModel()
+        {            
+            Billables = new ObservableCollection<Billable>();                       
+        }
+        void SetDisplayTotal()
         {
-            Billables = new ObservableCollection<Billable>();
-
-            Billables.Add(new Billable
-            {
-                BillableId = Guid.NewGuid(),
-                ClientName = "Jimbo Jones",
-                BillableDate = DateTime.Now,
-                BillableTime = new TimeSpan(1, 45, 0),
-                Notes = "Loves Beanies and breaking things"
-            });
-            Billables.Add(new Billable
-            {
-                BillableId = Guid.NewGuid(),
-                ClientName = "Nelson Muntz",
-                BillableDate = DateTime.Now,
-                BillableTime = new TimeSpan(2, 30, 0),
-                Notes = "Little slow .. but loves a good laugh"
-            });
-            Billables.Add(new Billable
-            {
-                BillableId = Guid.NewGuid(),
-                ClientName = "Kearney Zzyzwicz",
-                BillableDate = DateTime.Now,
-                BillableTime = new TimeSpan(2, 30, 0),
-                Notes = "Way to old to still be in school"
-            });
-            Billables.Add(new Billable
-            {
-                BillableId = Guid.NewGuid(),
-                ClientName = "Dolph Starbeam",
-                BillableDate = DateTime.Now,
-                BillableTime = new TimeSpan(1, 10, 0),
-                Notes = "Hippie parents"
-            });
+            var total = Billables.Sum(p => p.BillableTime.Ticks);
+            DisplayTotal = "Total Hours: " + new DateTime(total).ToString("H:mm");
+            RaisePropertyChanged("DisplayTotal");
         }
 
         public override async Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> suspensionState)
@@ -58,11 +35,62 @@ namespace IPDTracker.ViewModels
             {
                 
             }
-            if (parameter != null)
+            if(mode == NavigationMode.New && Billables.Count==0)
+            {
+                Billables = await FileHelper.GetBillablesAsync();
+                //Billables.Add(new Billable
+                //{
+                //    BillableId = Guid.NewGuid(),
+                //    ClientName = "Jimbo Jones",
+                //    BillableDate = DateTime.Now,
+                //    BillableTime = new TimeSpan(1, 45, 0),
+                //    Notes = "Loves Beanies and breaking things"
+                //});
+                //Billables.Add(new Billable
+                //{
+                //    BillableId = Guid.NewGuid(),
+                //    ClientName = "Nelson Muntz",
+                //    BillableDate = DateTime.Now,
+                //    BillableTime = new TimeSpan(2, 30, 0),
+                //    Notes = "Little slow .. but loves a good laugh"
+                //});
+                //Billables.Add(new Billable
+                //{
+                //    BillableId = Guid.NewGuid(),
+                //    ClientName = "Kearney Zzyzwicz",
+                //    BillableDate = DateTime.Now,
+                //    BillableTime = new TimeSpan(2, 30, 0),
+                //    Notes = "Way to old to still be in school"
+                //});
+                //Billables.Add(new Billable
+                //{
+                //    BillableId = Guid.NewGuid(),
+                //    ClientName = "Dolph Starbeam",
+                //    BillableDate = DateTime.Now,
+                //    BillableTime = new TimeSpan(1, 10, 0),
+                //    Notes = "Hippie parents"
+                //});
+                //await FileHelper.SetBillablesAsync(Billables);
+            }
+            if (parameter != null && mode != NavigationMode.Back)
             {
                 Billable billable = (Billable)parameter;
-                Billables.Add(billable);
+                Billable b;
+                try
+                { 
+                    b = Billables.First(i => i.BillableId == billable.BillableId);
+                    b.BillableDate = billable.BillableDate;
+                    b.BillableTime = billable.BillableTime;
+                    b.ClientName = billable.ClientName;
+                    b.Notes = billable.Notes;
+                }
+                catch
+                {
+                    Billables.Add(billable);
+                }
+                await FileHelper.SetBillablesAsync(Billables);
             }
+            SetDisplayTotal();
             await Task.CompletedTask;
         }
 
@@ -81,6 +109,19 @@ namespace IPDTracker.ViewModels
             await Task.CompletedTask;
         }
 
+        public void DeleteBillable()
+        {
+            if(selectedBillable != null)
+                Billables.Remove(selectedBillable);
+        }
+
+        public void BillableSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ListView lv = (ListView)sender;
+            selectedBillable = (Billable)lv.SelectedItem;
+        }
+        public void EditBillable() =>
+            NavigationService.Navigate(typeof(Views.EditBillablePage), selectedBillable);
         //public void GotoDetailsPage() => NavigationService.Navigate(typeof(Views.DetailPage), Value);
         public void GotoAddNew() =>
             NavigationService.Navigate(typeof(Views.NewBillablePage));

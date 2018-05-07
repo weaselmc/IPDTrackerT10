@@ -10,12 +10,16 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:vm="using:IPDTracker.ViewModels"
       xmlns:data="using:IPDTracker.Models"
+      xmlns:converters="using:IPDTracker.Services.ConverterServices"
       mc:Ignorable="d">
 
     <Page.DataContext>
         <vm:MainPageViewModel x:Name="ViewModel" />
     </Page.DataContext>
-
+    <Page.Resources>
+        <converters:ConvertDateOffset x:Key="ConvertDateOffset"/>
+        <converters:ConvertTimeSpan x:Key="ConvertTimeSpan" />
+    </Page.Resources>
     <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
         <VisualStateManager.VisualStateGroups>
@@ -55,7 +59,9 @@
                              RelativePanel.AlignTopWithPanel="True" 
                              Text="Home">
             <controls:PageHeader.PrimaryCommands>
-                <AppBarButton Icon="Add" Click="{x:Bind ViewModel.GotoAddNew}" Label="Add New"/>
+                <AppBarButton Icon="Add" Click="{x:Bind ViewModel.GotoAddNew}" Label="New"/>
+                <AppBarButton Icon="Edit" Click="{x:Bind ViewModel.EditBillable}" Label="Edit"/>
+                <AppBarButton Icon="Delete" Click="{x:Bind ViewModel. DeleteBillable}" Label="Delete"/>
             </controls:PageHeader.PrimaryCommands>
             <!--  secondary commands  -->
             <controls:PageHeader.SecondaryCommands>
@@ -66,10 +72,12 @@
 
         </controls:PageHeader>
         <ListView RelativePanel.Below="pageHeader" 
+                  RelativePanel.Above="TotalTextBlock"
                   RelativePanel.AlignLeftWithPanel="True" 
                   RelativePanel.AlignRightWithPanel="True"
                   x:Name="ListViewBillables" Margin="12"
-                  ItemsSource="{x:Bind ViewModel.Billables}">
+                  ItemsSource="{x:Bind ViewModel.Billables}"
+                  SelectionChanged="{x:Bind ViewModel.BillableSelectionChanged}">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="data:Billable">
                     <Grid>
@@ -92,9 +100,11 @@
                             </TextBlock.Foreground>-->
                         </TextBlock>
                         <TextBlock Margin="4" Grid.Row="1" 
-                                   Text="{Binding BillableDateString}"/>
+                                   Text="{Binding BillableDate, 
+                                        Converter={StaticResource ConvertDateOffset}}"/>
                         <TextBlock Margin="4" Grid.Row="1" Grid.Column="1" 
-                                   Text="{Binding BillableTimeString}"/>
+                                   Text="{Binding BillableTime,
+                                        Converter={StaticResource ConvertTimeSpan}}"/>
                         <TextBlock Margin="4" Grid.Row="1" Grid.Column="2" 
                                    Text="{Binding BillableId}" />
                         <TextBlock Margin="4" Grid.Row="2" Grid.ColumnSpan="3"
@@ -103,5 +113,12 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <TextBlock RelativePanel.AlignBottomWithPanel="True"
+                   RelativePanel.AlignLeftWithPanel="True"
+                   RelativePanel.AlignRightWithPanel="True"                   
+                   Margin="4" Text="{x:Bind ViewModel.DisplayTotal}"
+                   x:Name="TotalTextBlock"
+                   Style="{StaticResource SubheaderTextBlockStyle}"
+                   Foreground="{ThemeResource SystemAccentColorBrush}"/>
     </RelativePanel>
 </Page>

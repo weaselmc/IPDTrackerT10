@@ -39,8 +39,8 @@ namespace IPDTracker.Models
                 }
             }
         }
-        private DateTime billabledate;
-        public DateTime BillableDate
+        private DateTimeOffset billabledate;
+        public DateTimeOffset BillableDate
         {
             get
             {
@@ -52,16 +52,17 @@ namespace IPDTracker.Models
                 {
                     billabledate = value;
                     OnPropertyChanged("BillableDate");
+                    //OnPropertyChanged("BillableDateString");
                 }
             }
         }
-        public string BillableDateString
-        {
-            get
-            {
-                return billabledate.ToString("dd-MMM-yyyy");
-            }
-        }
+        //public string BillableDateString
+        //{
+        //    get
+        //    {
+        //        return billabledate.ToString("dd-MMM-yyyy");
+        //    }
+        //}
         private TimeSpan billabletime;
         public TimeSpan BillableTime
         {
@@ -75,16 +76,17 @@ namespace IPDTracker.Models
                 {
                     billabletime = value;
                     OnPropertyChanged("BillableTime");
+                    //OnPropertyChanged("BillableTimeString");
                 }
             }
         }
-        public string BillableTimeString
-        {
-            get
-            {
-                return new DateTime(billabletime.Ticks).ToString("hh:mm");
-            }
-        }
+        //public string BillableTimeString
+        //{
+        //    get
+        //    {
+        //        return new DateTime(billabletime.Ticks).ToString("hh:mm");
+        //    }
+        //}
 
         #region OnPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;

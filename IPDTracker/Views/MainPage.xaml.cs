@@ -9,9 +9,10 @@ namespace IPDTracker.Views
 {
     public sealed partial class MainPage : Page
     {
+        
         public MainPage()
         {
-            InitializeComponent();
+            InitializeComponent();            
             NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
         }
     }
