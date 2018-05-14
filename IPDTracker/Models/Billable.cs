@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Xml.Serialization;
 
 namespace IPDTracker.Models
 {
@@ -39,23 +40,34 @@ namespace IPDTracker.Models
                 }
             }
         }
-        private DateTimeOffset billabledate;
-        public DateTimeOffset BillableDate
+        private DateTime billabledate = DateTime.Now;
+
+        //[XmlIgnore]
+        public DateTime BillableDate //Offset
         {
             get
             {
-                return billabledate;
+                return billabledate;  //DateTime.SpecifyKind(billabledate, DateTimeKind.Local);
             }
             set
             {
-                if (value != billabledate)
+                if (value != billabledate) //.Date
                 {
-                    billabledate = value;
+                    billabledate = value; //.Date
                     OnPropertyChanged("BillableDate");
                     //OnPropertyChanged("BillableDateString");
                 }
             }
         }
+
+        //[XmlElement(ElementName = "BillableDate")]
+        //public string BillableDateString
+        //{
+        //    get { return BillableDate.ToString("yyyy-MM-ddTHH:mm:ss.fffffffzzz"); }
+        //    set { BillableDate = DateTimeOffset.Parse(value); }
+        //}
+
+
         //public string BillableDateString
         //{
         //    get

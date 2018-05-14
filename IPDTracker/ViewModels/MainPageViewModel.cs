@@ -38,6 +38,7 @@ namespace IPDTracker.ViewModels
             if(mode == NavigationMode.New && Billables.Count==0)
             {
                 Billables = await FileHelper.GetBillablesAsync();
+
                 //Billables.Add(new Billable
                 //{
                 //    BillableId = Guid.NewGuid(),

@@ -17,7 +17,7 @@
         <vm:MainPageViewModel x:Name="ViewModel" />
     </Page.DataContext>
     <Page.Resources>
-        <converters:ConvertDateOffset x:Key="ConvertDateOffset"/>
+        <converters:ConvertDatetodd_MMM_yyyy x:Key="ConvertDatetodd_MMM_yyyy"/>
         <converters:ConvertTimeSpan x:Key="ConvertTimeSpan" />
     </Page.Resources>
     <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -101,7 +101,7 @@
                         </TextBlock>
                         <TextBlock Margin="4" Grid.Row="1" 
                                    Text="{Binding BillableDate, 
-                                        Converter={StaticResource ConvertDateOffset}}"/>
+                                        Converter={StaticResource ConvertDatetodd_MMM_yyyy}}"/>
                         <TextBlock Margin="4" Grid.Row="1" Grid.Column="1" 
                                    Text="{Binding BillableTime,
                                         Converter={StaticResource ConvertTimeSpan}}"/>

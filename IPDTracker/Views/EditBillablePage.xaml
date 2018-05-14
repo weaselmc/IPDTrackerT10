@@ -9,12 +9,15 @@
       xmlns:local="using:IPDTracker.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:vm="using:IPDTracker.ViewModels" x:Name="ThisPage"
+      xmlns:converters="using:IPDTracker.Services.ConverterServices"
       mc:Ignorable="d">
 
     <Page.DataContext>
         <vm:EditBillablePageViewModel x:Name="ViewModel" />
     </Page.DataContext>
-
+    <Page.Resources>
+        <converters:ConvertDatetoDateOffset x:Key="ConvertDatetoDateOffset"/>
+    </Page.Resources>
     <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
         <VisualStateManager.VisualStateGroups>
@@ -63,18 +66,18 @@
                       RelativePanel.AlignRightWithPanel="True"
                       RelativePanel.Below="pageHeader"
                       VerticalScrollBarVisibility="Auto">
-            <StackPanel>
+            <StackPanel DataContext="{x:Bind ViewModel.billable}">
                 <TextBlock Style="{StaticResource TitleTextBlockStyle}" 
-                           Text="{Binding ViewModel.billable.BillableId}"
+                           Text="{Binding BillableId}"
                            Name="TBId" Margin="0,0,60,0"/>
-                <TextBox Text="{x:Bind ViewModel.billable.ClientName, Mode=TwoWay}"
+                <TextBox Text="{Binding ClientName, Mode=TwoWay}"
                           Header="Client Name:"/>
-                <DatePicker Date="{x:Bind ViewModel.billable.BillableDate, Mode=TwoWay}"
-                            Header="Billable Date:"/>
+                <DatePicker Date="{Binding BillableDate, Converter={StaticResource ConvertDatetoDateOffset},
+                    Mode=TwoWay}" Header="Billable Date:"/>
                 <TimePicker ClockIdentifier="24HourClock"
-                            Time="{x:Bind ViewModel.billable.BillableTime, Mode=TwoWay}"
+                            Time="{Binding BillableTime, Mode=TwoWay}"
                             Header="Billable Time:" />
-                <TextBox Text="{x:Bind ViewModel.billable.Notes, Mode=TwoWay}"
+                <TextBox Text="{Binding Notes, Mode=TwoWay}"
                           Header="Notes:" />
             </StackPanel>
         </ScrollViewer>

@@ -7,11 +7,23 @@ using Windows.UI.Xaml.Data;
 
 namespace IPDTracker.Services.ConverterServices
 {
-    class ConvertDateOffset : IValueConverter
+    class ConvertDatetoDateOffset : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
+            return new DateTimeOffset(DateTime.Parse(value.ToString()));
+        }
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
             var d = (DateTimeOffset)value;
+            return d.Date;
+        }
+    }
+    class ConvertDatetodd_MMM_yyyy : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, string language)
+        {
+            var d = (DateTime)value;
             return d.ToString("dd MMM yyyy");
         }
 
