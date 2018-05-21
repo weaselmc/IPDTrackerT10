@@ -33,7 +33,10 @@ namespace IPDTracker.Services.DataServices
 
         public static async Task SetBillablesAsync(ObservableCollection<Billable> items)
         {
-            StorageFile file = await ApplicationData.Current.LocalFolder.CreateFileAsync(filename, CreationCollisionOption.OpenIfExists);
+            //StorageFile file = await ApplicationData.Current.LocalFolder.GetFileAsync(filename);
+            //await file.CopyAsync(ApplicationData.Current.LocalFolder, filename + ".bak");
+            //Changed from CreationCollisionOption.OpenIfExists because causes XML error on item edit and delete
+            StorageFile file = await ApplicationData.Current.LocalFolder.CreateFileAsync(filename, CreationCollisionOption.ReplaceExisting); 
             XmlSerializer serializer = new XmlSerializer(typeof(ObservableCollection<Billable>));
             Stream s = await file.OpenStreamForWriteAsync();
             try
