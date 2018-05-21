@@ -73,5 +73,11 @@ namespace IPDTracker.Services.SettingsServices
                 Views.Shell.HamburgerMenu.IsFullScreen = value;
             }
         }
+
+        public string UserName
+        {
+            get { return _helper.Read<string>(nameof(UserName), null); }
+            set { _helper.Write(nameof(UserName), value);}
+        }
     }
 }

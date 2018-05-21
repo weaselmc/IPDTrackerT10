@@ -1,15 +1,11 @@
 ﻿<Page x:Class="IPDTracker.Views.SettingsPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:Behaviors="using:Template10.Behaviors"
-      xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
-      xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
-      xmlns:controls="using:Template10.Controls"
-      xmlns:converter="using:Template10.Converters"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="using:IPDTracker.Views"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:vm="using:IPDTracker.ViewModels"
+      xmlns:controls="using:Template10.Controls"
+      xmlns:converter="using:Template10.Converters"
       mc:Ignorable="d">
 
     <Page.DataContext>
@@ -116,6 +112,15 @@
                                       OnContent="IPDTracker Menu is hidden"
                                       RelativePanel.AlignLeftWithPanel="True"
                                       RelativePanel.Below="ShowHamburgerButtonToggleSwitch" />
+                        
+                        <TextBox x:Name="UserNameTextBox"
+                                 Width="200"
+                                 Margin="0,12,0,0"
+                                 HorizontalAlignment="Left"
+                                 Header="Username"
+                                 RelativePanel.AlignLeftWithPanel="True"
+                                 RelativePanel.Below="IsFullScreenToggleSwitch"
+                                 Text="{Binding UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                         <TextBox x:Name="BusyTextTextBox"
                                  Width="200"
@@ -123,7 +128,7 @@
                                  HorizontalAlignment="Left"
                                  Header="Busy text"
                                  RelativePanel.AlignLeftWithPanel="True"
-                                 RelativePanel.Below="IsFullScreenToggleSwitch"
+                                 RelativePanel.Below="UserNameTextBox"
                                  Text="{Binding BusyText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                         <Button Margin="12,0,0,0"

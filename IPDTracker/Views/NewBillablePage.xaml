@@ -70,7 +70,7 @@
                 <TextBlock Style="{StaticResource TitleTextBlockStyle}" 
                            Text="{Binding BillableId}"
                            Name="TBId" Margin="0,0,60,0"/>
-                <TextBox Text="{Binding ClientName, Mode=TwoWay}"
+                <TextBox Text="{Binding ClientName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                           Header="Client Name:"/>
                 <DatePicker Date="{Binding BillableDate, Mode=TwoWay, 
                             Converter={StaticResource ConvertDatetoDateOffset}}"
@@ -78,7 +78,7 @@
                 <TimePicker ClockIdentifier="24HourClock"
                             Time="{Binding BillableTime, Mode=TwoWay}"
                             Header="Billable Time:" />
-                <TextBox Text="{Binding Notes, Mode=TwoWay}"
+                <TextBox Text="{Binding Notes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                           Header="Notes:" />
             </StackPanel>
         </ScrollViewer>
