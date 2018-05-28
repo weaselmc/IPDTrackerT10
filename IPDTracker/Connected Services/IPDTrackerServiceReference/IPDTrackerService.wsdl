@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="IPDTrackerService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:56102/IPDTrackerService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:56102/IPDTrackerService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:56102/IPDTrackerService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/IPDTrackerService" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IIPDTrackerService_GetEntries_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetEntries" />
+  </wsdl:message>
+  <wsdl:message name="IIPDTrackerService_GetEntries_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetEntriesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IIPDTrackerService_GetEntry_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetEntry" />
+  </wsdl:message>
+  <wsdl:message name="IIPDTrackerService_GetEntry_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetEntryResponse" />
+  </wsdl:message>
+  <wsdl:message name="IIPDTrackerService_DeleteEntry_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteEntry" />
+  </wsdl:message>
+  <wsdl:message name="IIPDTrackerService_DeleteEntry_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteEntryResponse" />
+  </wsdl:message>
+  <wsdl:message name="IIPDTrackerService_UpdateEntry_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateEntry" />
+  </wsdl:message>
+  <wsdl:message name="IIPDTrackerService_UpdateEntry_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateEntryResponse" />
+  </wsdl:message>
+  <wsdl:message name="IIPDTrackerService_CreateEntry_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateEntry" />
+  </wsdl:message>
+  <wsdl:message name="IIPDTrackerService_CreateEntry_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateEntryResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IIPDTrackerService">
+    <wsdl:operation name="GetEntries">
+      <wsdl:input wsaw:Action="http://tempuri.org/IIPDTrackerService/GetEntries" message="tns:IIPDTrackerService_GetEntries_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IIPDTrackerService/GetEntriesResponse" message="tns:IIPDTrackerService_GetEntries_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEntry">
+      <wsdl:input wsaw:Action="http://tempuri.org/IIPDTrackerService/GetEntry" message="tns:IIPDTrackerService_GetEntry_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IIPDTrackerService/GetEntryResponse" message="tns:IIPDTrackerService_GetEntry_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteEntry">
+      <wsdl:input wsaw:Action="http://tempuri.org/IIPDTrackerService/DeleteEntry" message="tns:IIPDTrackerService_DeleteEntry_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IIPDTrackerService/DeleteEntryResponse" message="tns:IIPDTrackerService_DeleteEntry_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateEntry">
+      <wsdl:input wsaw:Action="http://tempuri.org/IIPDTrackerService/UpdateEntry" message="tns:IIPDTrackerService_UpdateEntry_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IIPDTrackerService/UpdateEntryResponse" message="tns:IIPDTrackerService_UpdateEntry_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateEntry">
+      <wsdl:input wsaw:Action="http://tempuri.org/IIPDTrackerService/CreateEntry" message="tns:IIPDTrackerService_CreateEntry_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IIPDTrackerService/CreateEntryResponse" message="tns:IIPDTrackerService_CreateEntry_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IIPDTrackerService" type="tns:IIPDTrackerService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetEntries">
+      <soap:operation soapAction="http://tempuri.org/IIPDTrackerService/GetEntries" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEntry">
+      <soap:operation soapAction="http://tempuri.org/IIPDTrackerService/GetEntry" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteEntry">
+      <soap:operation soapAction="http://tempuri.org/IIPDTrackerService/DeleteEntry" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateEntry">
+      <soap:operation soapAction="http://tempuri.org/IIPDTrackerService/UpdateEntry" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateEntry">
+      <soap:operation soapAction="http://tempuri.org/IIPDTrackerService/CreateEntry" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="IPDTrackerService">
+    <wsdl:port name="BasicHttpBinding_IIPDTrackerService" binding="tns:BasicHttpBinding_IIPDTrackerService">
+      <soap:address location="http://localhost:56102/IPDTrackerService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

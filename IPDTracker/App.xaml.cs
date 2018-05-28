@@ -28,8 +28,7 @@ namespace IPDTracker
             var settings = SettingsService.Instance;
             RequestedTheme = settings.AppTheme;
             CacheMaxDuration = settings.CacheMaxDuration;
-            ShowShellBackButton = settings.UseShellBackButton;
-
+            ShowShellBackButton = settings.UseShellBackButton;          
             #endregion
         }
 

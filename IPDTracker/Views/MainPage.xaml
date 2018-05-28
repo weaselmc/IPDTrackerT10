@@ -9,7 +9,7 @@
       xmlns:local="using:IPDTracker.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:vm="using:IPDTracker.ViewModels"
-      xmlns:data="using:IPDTracker.Models"
+      xmlns:data="using:IPDTracker.IPDTrackerServiceReference"
       xmlns:converters="using:IPDTracker.Services.ConverterServices"
       mc:Ignorable="d">
 
@@ -79,7 +79,7 @@
                   ItemsSource="{x:Bind ViewModel.Billables}"
                   SelectionChanged="{x:Bind ViewModel.BillableSelectionChanged}">
             <ListView.ItemTemplate>
-                <DataTemplate x:DataType="data:Billable">
+                <DataTemplate x:DataType="data:BillingEntry">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition />

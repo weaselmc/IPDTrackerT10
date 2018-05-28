@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="f42d9dbb-5cec-4e67-a8e7-8d1fad0986c8" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.ObjectModel.ObservableCollection`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>false</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:56102/IPDTrackerService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="IPDTrackerService.disco" MetadataType="Disco" ID="dd191d82-cbe3-4d57-98b7-f58ecbf7a5ca" SourceId="1" SourceUrl="http://localhost:56102/IPDTrackerService.svc?disco" />
+    <MetadataFile FileName="IPDTrackerService.xsd" MetadataType="Schema" ID="7ccf768f-1910-46ff-bfbb-198abcf24f51" SourceId="1" SourceUrl="http://localhost:56102/IPDTrackerService.svc?xsd=xsd1" />
+    <MetadataFile FileName="IPDTrackerService1.xsd" MetadataType="Schema" ID="367e6e35-e6b7-4a8d-bcaf-ba662c28fbc7" SourceId="1" SourceUrl="http://localhost:56102/IPDTrackerService.svc?xsd=xsd2" />
+    <MetadataFile FileName="IPDTrackerService.wsdl" MetadataType="Wsdl" ID="96dcadd8-5c52-478e-a3bd-486cb6310c81" SourceId="1" SourceUrl="http://localhost:56102/IPDTrackerService.svc?wsdl" />
+    <MetadataFile FileName="IPDTrackerService2.xsd" MetadataType="Schema" ID="47571858-390d-4933-89be-ca4b2e2b815f" SourceId="1" SourceUrl="http://localhost:56102/IPDTrackerService.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

@@ -6,21 +6,23 @@ using System.Threading.Tasks;
 using Template10.Services.NavigationService;
 using Windows.UI.Xaml.Navigation;
 using System.Collections.ObjectModel;
+using IPDTracker;
 using IPDTracker.Models;
 using IPDTracker.Views;
 using Windows.UI.Xaml.Controls;
 using IPDTracker.Services.DataServices;
+using IPDTracker.IPDTrackerServiceReference;
 
 namespace IPDTracker.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {
-        public ObservableCollection<Billable> Billables { get; set; }
-        public Billable selectedBillable;
+        public ObservableCollection<BillingEntry> Billables { get; set; }
+        public BillingEntry selectedBillable;
         public string DisplayTotal { get; set; }
         public MainPageViewModel()
         {            
-            Billables = new ObservableCollection<Billable>();                       
+            Billables = new ObservableCollection<BillingEntry>();                       
         }
         void SetDisplayTotal()
         {
@@ -37,7 +39,8 @@ namespace IPDTracker.ViewModels
             }
             if(mode == NavigationMode.New && Billables.Count==0)
             {
-                Billables = await FileHelper.GetBillablesAsync();
+
+                Billables = await DataHelper.GetBillablesAsync(); // FileHelper.GetBillablesAsync();
 
                 //Billables.Add(new Billable
                 //{
@@ -75,21 +78,26 @@ namespace IPDTracker.ViewModels
             }
             if (parameter != null && mode != NavigationMode.Back)
             {
-                Billable billable = (Billable)parameter;
-                Billable b;
+                BillingEntry billable = (BillingEntry)parameter;
+                BillingEntry b;
                 try
-                { 
+                {
                     b = Billables.First(i => i.BillableId == billable.BillableId);
-                    b.BillableDate = billable.BillableDate;
-                    b.BillableTime = billable.BillableTime;
-                    b.ClientName = billable.ClientName;
-                    b.Notes = billable.Notes;
+                    if (await DataHelper.UpdateBillableAsync(b))
+                    { 
+                        b.BillableDate = billable.BillableDate;
+                        b.BillableTime = billable.BillableTime;
+                        b.ClientName = billable.ClientName;
+                        b.Notes = billable.Notes;
+                        RaisePropertyChanged();
+                    }
                 }
                 catch
                 {
-                    Billables.Add(billable);
+                    if (await DataHelper.CreateBillableAsync(billable))
+                        Billables.Add(billable);
                 }
-                await FileHelper.SetBillablesAsync(Billables);
+                //await FileHelper.SetBillablesAsync(Billables);
             }
             SetDisplayTotal();
             await Task.CompletedTask;
@@ -110,16 +118,19 @@ namespace IPDTracker.ViewModels
             await Task.CompletedTask;
         }
 
-        public void DeleteBillable()
+        public async void DeleteBillable()
         {
-            if(selectedBillable != null)
-                Billables.Remove(selectedBillable);
+            if (selectedBillable != null)
+            {
+                if (await DataHelper.DeleteBillableAsync(selectedBillable))
+                    Billables.Remove(selectedBillable);
+            }
         }
 
         public void BillableSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ListView lv = (ListView)sender;
-            selectedBillable = (Billable)lv.SelectedItem;
+            selectedBillable = (BillingEntry)lv.SelectedItem;
         }
         public void EditBillable() =>
             NavigationService.Navigate(typeof(Views.EditBillablePage), selectedBillable);
