@@ -71,6 +71,7 @@
             </controls:PageHeader.SecondaryCommands>
 
         </controls:PageHeader>
+        <ProgressRing x:Name="progressRing"  Visibility="{x:Bind ViewModel.Loading}" />
         <ListView RelativePanel.Below="pageHeader"                   
                   RelativePanel.AlignLeftWithPanel="True" 
                   RelativePanel.AlignRightWithPanel="True"

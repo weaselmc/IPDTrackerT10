@@ -1,4 +1,5 @@
-﻿using IPDTracker.Models;
+﻿using IPDTracker.IPDTrackerServiceReference;
+using IPDTracker.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +14,10 @@ namespace IPDTracker.ViewModels
 {
     public class EditBillablePageViewModel : ViewModelBase
     {
-        public Billable billable  { get; set; }
+        public BillingEntry billable  { get; set; }
         public EditBillablePageViewModel()
         {
-            billable = new Billable();            
+                       
         }
         
         public override async Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> suspensionState)
@@ -24,7 +25,8 @@ namespace IPDTracker.ViewModels
             //Value = (suspensionState.ContainsKey(nameof(Value))) ? suspensionState[nameof(Value)]?.ToString() : parameter?.ToString();
             if (parameter != null)
             {
-                Billable b = (Billable)parameter;
+                billable = new BillingEntry();
+                BillingEntry b = (BillingEntry)parameter;
                 billable.BillableId = b.BillableId;
                 billable.BillableDate = b.BillableDate;
                 billable.BillableTime = b.BillableTime;

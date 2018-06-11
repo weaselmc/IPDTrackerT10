@@ -11,12 +11,22 @@ using IPDTracker.Views;
 using Windows.UI.Xaml.Controls;
 using IPDTracker.Services.DataServices;
 using Windows.ApplicationModel.Contacts;
+using Windows.UI.Xaml;
 
 namespace IPDTracker.ViewModels
 {
     public class ContactsPageViewModel : ViewModelBase
     {
         public ObservableCollection<Contact> Contacts { get; set; }
+        private bool progressVisible = false;
+        public Visibility Loading {
+            get{
+                if (progressVisible)
+                    return Visibility.Visible;
+                else
+                    return Visibility.Collapsed;
+            }
+        }
         public Contact selectedContact;
         //public string DisplayTotal { get; set; }
         public ContactsPageViewModel()
@@ -26,12 +36,17 @@ namespace IPDTracker.ViewModels
 
         async Task<ObservableCollection<Contact>> GetContactsAsync()
         {
+            progressVisible = true;
+            this.RaisePropertyChanged();
             ContactStore store = await ContactManager.RequestStoreAsync(ContactStoreAccessType.AppContactsReadWrite);
             //find contact list
             ContactList contactlist = await store.CreateContactListAsync(Windows.ApplicationModel.Package.Current.DisplayName); //problem if it already exists
             ContactReader contactreader = contactlist.GetContactReader();
             ContactBatch contactbatch = await contactreader.ReadBatchAsync();
+            progressVisible = false;
+            this.RaisePropertyChanged();
             return new ObservableCollection<Contact>(contactbatch.Contacts); // store.FindContactsAsync()
+            
         }
         
         public override async Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> suspensionState)

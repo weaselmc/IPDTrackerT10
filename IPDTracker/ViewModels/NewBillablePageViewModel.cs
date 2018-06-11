@@ -1,4 +1,5 @@
-﻿using IPDTracker.Models;
+﻿using IPDTracker.IPDTrackerServiceReference;
+using IPDTracker.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,12 +16,12 @@ namespace IPDTracker.ViewModels
     {
         public NewBillablePageViewModel()
         {
-            billable = new Billable();
+            billable = new BillingEntry();
             billable.BillableId = Guid.NewGuid();
             billable.BillableDate = DateTime.Now;
         }
 
-        public Billable billable  { get; set; }
+        public BillingEntry billable  { get; set; }
 
         public override async Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> suspensionState)
         {
