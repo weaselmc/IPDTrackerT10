@@ -18,10 +18,10 @@ namespace IPDTracker.ViewModels
     public class ContactsPageViewModel : ViewModelBase
     {
         public ObservableCollection<Contact> Contacts { get; set; }
-        private bool progressVisible = false;
-        public Visibility Loading {
+        private bool isLoading = false;
+        public Visibility IsLoading {
             get{
-                if (progressVisible)
+                if (isLoading)
                     return Visibility.Visible;
                 else
                     return Visibility.Collapsed;
@@ -35,16 +35,12 @@ namespace IPDTracker.ViewModels
         }
 
         async Task<ObservableCollection<Contact>> GetContactsAsync()
-        {
-            progressVisible = true;
-            this.RaisePropertyChanged();
+        {            
             ContactStore store = await ContactManager.RequestStoreAsync(ContactStoreAccessType.AppContactsReadWrite);
             //find contact list
             ContactList contactlist = await store.CreateContactListAsync(Windows.ApplicationModel.Package.Current.DisplayName); //problem if it already exists
             ContactReader contactreader = contactlist.GetContactReader();
-            ContactBatch contactbatch = await contactreader.ReadBatchAsync();
-            progressVisible = false;
-            this.RaisePropertyChanged();
+            ContactBatch contactbatch = await contactreader.ReadBatchAsync();           
             return new ObservableCollection<Contact>(contactbatch.Contacts); // store.FindContactsAsync()
             
         }
@@ -57,6 +53,7 @@ namespace IPDTracker.ViewModels
             }
             if(mode == NavigationMode.New && Contacts.Count==0)
             {
+                
                 Contacts = await GetContactsAsync();  // await FileHelper.GetBillablesAsync();
 
                 //Billables.Add(new Billable
