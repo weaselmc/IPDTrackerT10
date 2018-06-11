@@ -18,7 +18,7 @@ namespace IPDTracker.Services.DataServices
             if (client.State != System.ServiceModel.CommunicationState.Opened)
                 await client.OpenAsync();
             ObservableCollection<BillingEntry> entries = await client.GetEntriesAsync();
-            await client.CloseAsync();
+            //await client.CloseAsync();
             return entries;
         }
 
@@ -28,7 +28,7 @@ namespace IPDTracker.Services.DataServices
             if (client.State != System.ServiceModel.CommunicationState.Opened)
                 await client.OpenAsync();
             bool result = await client.CreateEntryAsync(entry);
-            await client.CloseAsync();
+            //await client.CloseAsync();
             return result;
         }
 
@@ -38,7 +38,7 @@ namespace IPDTracker.Services.DataServices
             if (client.State != System.ServiceModel.CommunicationState.Opened)
                 await client.OpenAsync();
             bool result = await client.UpdateEntryAsync(entry);
-            await client.CloseAsync();
+            //await client.CloseAsync();
             return result;
         }
 
@@ -47,7 +47,7 @@ namespace IPDTracker.Services.DataServices
             if (client.State != System.ServiceModel.CommunicationState.Opened)
                 await client.OpenAsync();
             bool result = await client.DeleteEntryAsync(entry.BillableId);
-            await client.CloseAsync();
+            //await client.CloseAsync();
             return result;
         }
     }

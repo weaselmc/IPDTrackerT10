@@ -41,8 +41,7 @@ namespace IPDTrackerService
         [DataMember]
         public string Notes { get; set; }
         [DataMember]
-        public DateTime BillableDate { get; set; }
-        
+        public DateTime BillableDate { get; set; }        
         //[XmlIgnore]
         [DataMember ]
         public TimeSpan BillableTime { get; set; }
